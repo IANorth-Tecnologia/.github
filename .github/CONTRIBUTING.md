@@ -136,6 +136,14 @@ git checkout -b hotfix/<descrição>
 
 Hotfixes podem ter review reduzido, mas **nunca** dispensam review.
 
+
+## 🔒 Segurança
+
+Vulnerabilidades de segurança **nunca** devem ser relatadas em canais públicos do Teams (`💻 dev`, `🚨 incidentes`) ou em Issues abertas.
+
+1. Para relatar uma falha no código, utilize o [GitHub Security Advisory](https://github.com/IANorth-Tecnologia/.github/security/advisories/new).
+2. Em caso de exposição ativa em produção (ex: credenciais vazadas ou dados expostos), envie imediatamente uma **Mensagem Direta (DM) no Teams** para a Direção Técnica.
+
 ---
 
 ## 📞 Dúvidas?
