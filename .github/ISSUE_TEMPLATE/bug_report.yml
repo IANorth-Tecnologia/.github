@@ -1,0 +1,67 @@
+name: 🐛 Bug Report
+description: Reportar um bug ou comportamento inesperado
+title: "[BUG] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar! Preencha as informações abaixo para acelerar a investigação.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição do bug
+      description: O que aconteceu? O que você esperava que acontecesse?
+      placeholder: Quando faço X, acontece Y, mas o esperado era Z.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Vá para '...'
+        2. Clique em '...'
+        3. Veja o erro
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Ambiente
+      options:
+        - Desenvolvimento local
+        - Homologação / Staging
+        - Produção - Sinobras
+        - Produção - Outro cliente
+        - Não sei
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidade
+      options:
+        - 🔴 Crítica (sistema parado / perda de dados)
+        - 🟠 Alta (funcionalidade principal quebrada)
+        - 🟡 Média (funcionalidade secundária afetada)
+        - 🟢 Baixa (cosmético / UX)
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Screenshots
+      description: Cole logs relevantes ou anexe screenshots
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional
+      description: Versão, dispositivo IoT envolvido, horário do incidente, etc.

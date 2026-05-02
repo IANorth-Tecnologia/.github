@@ -1,0 +1,43 @@
+name: ✨ Feature Request
+description: Sugerir uma nova funcionalidade ou melhoria
+title: "[FEATURE] "
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema / Necessidade
+      description: Qual problema essa feature resolve? Que dor do usuário/cliente ela atende?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solução proposta
+      description: Como você imagina que isso deveria funcionar?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Outras abordagens que você pensou e por que descartou.
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridade sugerida
+      options:
+        - 🔴 Alta (bloqueante / cliente pediu)
+        - 🟡 Média (próximo ciclo)
+        - 🟢 Baixa (nice to have)
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional
+      description: Mockups, referências, links, dados de mercado.

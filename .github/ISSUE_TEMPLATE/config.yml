@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussão geral
+    url: https://teams.microsoft.com/l/team/19%3AthGnEe4JifB0WJ5AuB-J8-wGYR97Zl2tyOSJOjZfNyo1%40thread.tacv2/conversations?groupId=7cad8335-88a0-4376-a9f5-984e7ce27317&tenantId=3f03d23e-500b-474b-ab11-094dfc5b8b77
+    about: Ideias e dúvidas devem ser discutidas nos canais da Engenharia no Teams antes de virarem issues. 
+
+  - name: 🔒 Reportar vulnerabilidade de segurança
+    url: https://github.com/IANorth-Tecnologia/.github/security/advisories/new
+    about: Para questões de segurança, use o canal privado de advisory.

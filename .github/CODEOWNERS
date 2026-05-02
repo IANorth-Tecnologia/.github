@@ -1,0 +1,23 @@
+# CODEOWNERS — IANorth Tecnologia
+#
+# Este arquivo define quem é responsável por revisar mudanças em cada parte do código.
+# Quando um PR toca um arquivo, o owner correspondente é automaticamente solicitado para review.
+#
+# Sintaxe: <padrão> <@usuário ou @org/team>
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/customizing-your-repository/about-code-owners
+
+# Owner padrão de tudo (fallback)
+* @omarlonRosa
+
+# Quando você tiver equipe, troque para teams:
+# * @IANorth-Tecnologia/core-team
+
+# Exemplos de granularidade que você pode adotar quando crescer:
+#
+# /backend/         @IANorth-Tecnologia/backend-team
+# /frontend/        @IANorth-Tecnologia/frontend-team
+# /iot/             @IANorth-Tecnologia/iot-team
+# /ai/              @IANorth-Tecnologia/ai-team
+# /infra/           @IANorth-Tecnologia/devops
+# /.github/         @IANorth-Tecnologia/tech-leads
+# *.md              @IANorth-Tecnologia/docs
