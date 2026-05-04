@@ -32,7 +32,6 @@ jobs:
       - name: Placeholder
         run: echo "Configure os testes da sua stack aqui"
 
-  # NOVO JOB DE DOCKER AQUI:
   build-docker:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
@@ -48,7 +47,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Extrair metadados (tags, labels)
-        id: meta
+        id: meta-backend
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
@@ -59,12 +58,42 @@ jobs:
       - name: Build e Push da Imagem
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./ci.yml
+
+  build-frontend:
+    name: Build Frontend (UI)
+    runs-on: ubuntu-latest
+    needs: [lint-e-testes]
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Login no GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extrair metadados Frontend
+        id: meta-frontend
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}-frontend
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build e Push da Imagem Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend 
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
+
+
+
 
   pr-validation:
     name: Valida título do PR
