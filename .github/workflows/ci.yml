@@ -16,68 +16,55 @@ permissions:
   packages: write 
 
 jobs:
-  # ==========================================
-  # TRABALHO BASE
-  # ==========================================
-  lint-e-testes:
-    name: Lint e Testes
+  lint:
+    name: Lint & Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Testes
-        run: echo "Aqui entrarão os testes."
+      - name: Placeholder
+        run: echo "Configure o linter da sua stack aqui"
 
-  # ==========================================
-  # COMPILAR BACKEND
-  # ==========================================
-  build-backend:
-    name: Build Backend (IA)
+  test:
+    name: Testes
     runs-on: ubuntu-latest
-    needs: [lint-e-testes] # Ligação corrigida
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/login-action@v3
+      - name: Placeholder
+        run: echo "Configure os testes da sua stack aqui"
+
+  # NOVO JOB DE DOCKER AQUI:
+  build-docker:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Login no GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - id: meta-backend
+          password: ${{ secrets.GITHUB_TOKEN }} # O GitHub injeta isso automaticamente!
+
+      - name: Extrair metadados (tags, labels)
+        id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}-backend 
-          tags: type=raw,value=latest,enable={{is_default_branch}}
-      - uses: docker/build-push-action@v5
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,format=short
+
+      - name: Build e Push da Imagem
+        uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: .
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          tags: ${{ steps.meta-backend.outputs.tags }}
-
-  # ==========================================
-  # COMPILAR FRONTEND
-  # ==========================================
-  build-frontend:
-    name: Build Frontend (UI)
-    runs-on: ubuntu-latest
-    needs: [lint-e-testes] 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - id: meta-frontend
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}-frontend
-          tags: type=raw,value=latest,enable={{is_default_branch}}
-      - uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          tags: ${{ steps.meta-frontend.outputs.tags }}
-
-
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   pr-validation:
     name: Valida título do PR
